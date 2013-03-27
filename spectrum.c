@@ -1,5 +1,6 @@
 #include <math.h>
 #include <stdlib.h>
+#include <stdio.h>
 #include "spectrum.h"
 
 /* Returns a new spectrum object by performing a DFT on the 'length' first samples
@@ -62,4 +63,37 @@ void freeSpectrum(spectrum_t* s)
   free(s->spectrum_r);
   free(s->spectrum_i);
   free(s);
+}
+
+/*
+ * ASCII art representation of a spectrum.
+ */
+void printSpectrum(spectrum_t *s, int sampleRate)
+{
+  for (int i = 0; i < s->k / 2; i++) {
+    // Calculate the frequency in the analog world
+    double frequency = ((double)i)/s->k * (float)sampleRate;
+
+    // Calculate the magnitude at this frequency
+    // multiply by two because half of the power is at -frequency
+    // and we want to measure it too.
+    double magnitude = 2 * spectralMagnitude(s, i);
+
+    // AHEM - but I am not sure why we need to multiply twice by 2....
+    magnitude *= 2;
+
+    // Amplitude in dB - This is a factor of the magnitude to the max value (1)
+    // so the amplitude in dB will always be a negative number.
+    double dbAmplitude = 20 * log10(magnitude / 1);
+
+    printf("Power @%6.0f Hz: %7.2f dB Magnitude: %.5f ",
+           frequency,
+           dbAmplitude,
+           magnitude);
+
+    // One # for each dB above -100
+    for (int j = -100; j < dbAmplitude; j++)
+      putchar('#');
+    putchar('\n');
+  }
 }

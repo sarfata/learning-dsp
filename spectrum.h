@@ -23,3 +23,8 @@ spectrum_t* performDft(int16_t *audio, uint32_t length, int window);
 
 /* Returns the spectral magnitude at given frequency. */
 double spectralMagnitude(spectrum_t *s, int frequency);
+
+/*
+ * ASCII art representation of a spectrum.
+ */
+void printSpectrum(spectrum_t *s, int sampleRate);
