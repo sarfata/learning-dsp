@@ -5,6 +5,8 @@ Some very basic and crude implementation of DSP functions to test my understandi
 Currently includes:
 
  * A Discrete Fourier Transform (DFT) function
+ * Hanning Window when performing the DFT
+ * Spectral magnitude calculation
 
 And some useful tidbits to play with it:
 
