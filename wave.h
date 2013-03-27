@@ -32,3 +32,5 @@ void debugWaveHeader(t_wave_header *header);
 
 uint32_t waveSamples(t_wave_header *header);
 float waveDuration(t_wave_header *header);
+
+void dumpSamples(t_wavef *wave, int count);

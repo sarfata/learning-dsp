@@ -64,9 +64,9 @@ int readAudio(t_wavef* wave)
   ssize_t len;
 
   wave->audio = malloc(wave->header->audioSize);
-  len = pread(wave->fd, wave->audio, wave->header->audioSize, sizeof(wave->header));
+  len = pread(wave->fd, wave->audio, wave->header->audioSize, sizeof(t_wave_header));
   if (len != wave->header->audioSize) {
-    WARN("Unable to read complete audio data (%zi vs %zi)", len, sizeof(wave->header));
+    WARN("Unable to read complete audio data (%zi vs %zi)", len, sizeof(wave->header->audioSize));
     return -1;
   }
   return 0;
@@ -99,3 +99,13 @@ void debugWaveHeader(t_wave_header *header)
   printf("NumSamples: %i\n", waveSamples(header));
   printf("File duration: %f\n", waveDuration(header));
 }
+
+void dumpSamples(t_wavef *wave, int count)
+{
+  int16_t *audio = (int16_t*)wave->audio;
+
+  for (int i = 0; i < count && i < waveSamples(wave->header); i++) {
+    printf("audio[%i]: %02X%02X %i\n", i, wave->audio[i*2], wave->audio[i*2+1], audio[i]);
+  }
+}
+

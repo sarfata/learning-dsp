@@ -6,8 +6,8 @@ $(TARGET).o: $(TARGET).c $(TARGET).h
 
 all: fftfun
 
-fftfun: main.o wave.o dft.o
-		$(CC) $(CFLAGS) -o fftfun main.o wave.o dft.o
+fftfun: main.o wave.o spectrum.o
+		$(CC) $(CFLAGS) -o fftfun main.o wave.o spectrum.o
 
 clean:
 		rm -f fftfun *.o
